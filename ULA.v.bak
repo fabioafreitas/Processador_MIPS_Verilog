@@ -32,6 +32,10 @@ initial begin
   Z = 0;
 end
 	
+	// DALE THAYNA
+	// DALE THAYNA
+	// DALE THAYNA
+	
 always @ (A or B or OP) begin : operacoes_ula
 
   case (OP)
@@ -55,7 +59,6 @@ always @ (A or B or OP) begin : operacoes_ula
   end
 	
 	// 3
-	// 
 	4'b0011: begin
     
   end
