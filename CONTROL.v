@@ -32,8 +32,8 @@
 
 
 // OP da ULA
+// Falta alterar algumas operações e perguntar ao professor quantas operações devem ser implementadas
 `define ALUOP_ADDI   2'b00
-`define ALUOP_
 `define ALUOP_LW     2'b00
 `define ALUOP_SW     2'b00
 `define ALUOP_BEQ    2'b01
