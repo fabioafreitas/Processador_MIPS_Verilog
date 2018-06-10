@@ -8,14 +8,32 @@
  * @author André Aziz (andre.caraujo@ufrpe.br)
  */
 
-`define OPCODE_TIPO_R 6'b000000
+// OPCODE
+`define OPCODE_TIPO_R 6'b000000 // diferenciar pelo campo FUNCT bits[5:0]
 `define OPCODE_ADDI   6'b001000
-`define OPCODE_LW     6'b100011
-`define OPCODE_SW     6'b101011
+`define OPCODE_ADDIU  6'b001001
+`define OPCODE_ANDI   6'b001100
 `define OPCODE_BEQ    6'b000100
+`define OPCODE_BNE    6'b000101
 `define OPCODE_J      6'b000010
+`define OPCODE_JAL    6'b000011
+`define OPCODE_LBU    6'b100100
+`define OPCODE_LHU    6'b100101
+`define OPCODE_LL     6'b110000
+`define OPCODE_LUI    6'b001111
+`define OPCODE_LW     6'b100011
+`define OPCODE_ORI    6'b001101
+`define OPCODE_SLTI   6'b001010
+`define OPCODE_SLTIU  6'b001011
+`define OPCODE_SB     6'b101000
+`define OPCODE_SC     6'b111000
+`define OPCODE_SH     6'b101001
+`define OPCODE_SW     6'b101011
 
+
+// OP da ULA
 `define ALUOP_ADDI   2'b00
+`define ALUOP_
 `define ALUOP_LW     2'b00
 `define ALUOP_SW     2'b00
 `define ALUOP_BEQ    2'b01
@@ -117,6 +135,162 @@ always @(nrst, opcode) begin : decode_thread
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 1;  
     end
+  
+    `OPCODE_ADDIU: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_ANDI: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+ 
+    `OPCODE_ADDIU: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_ANDI: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_BEQ: begin
+      branch 			= 1;
+      read_mem 			= 0;
+      write_mem 		= 0;
+      write_reg 		= 0;
+      alu_op 			= `ALUOP_BEQ;
+      mux_write_rt_rd 		= 0;
+      mux_alu_src_reg_imm 	= 0;
+      mux_branch_jump 		= 1;
+      mux_pc_branch 		= 1;
+      mux_reg_src_alu_mem 	= 0;  
+    end
+    
+    `OPCODE_BNE: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_J: begin
+      branch 			= 0;
+      read_mem 			= 0;
+      write_mem 		= 0;
+      write_reg 		= 0;
+      alu_op 			= `ALUOP_TIPO_R;
+      mux_write_rt_rd 		= 0;
+      mux_alu_src_reg_imm 	= 0;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 0;
+      mux_reg_src_alu_mem 	= 0;  
+    end
+    
+    `OPCODE_JAL: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_LBU: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_LHU: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_LL: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_LUI: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
  
     `OPCODE_LW: begin
       branch 			= 0;
@@ -129,6 +303,84 @@ always @(nrst, opcode) begin : decode_thread
       mux_branch_jump 		= 1;
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 0;  
+    end
+    
+    `OPCODE_ORI: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_SLTI: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_SLTIU: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_SB: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_SC: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
+    end
+    
+    `OPCODE_SH: begin
+//    branch 			= 0;
+//    read_mem 			= 0;
+//    write_mem 		= 0;
+//    write_reg 		= 1;
+//    alu_op 			= `ALUOP_;
+//    mux_write_rt_rd 		= 0;
+//    mux_alu_src_reg_imm 	= 1;
+//    mux_branch_jump 		= 1;
+//    mux_pc_branch 		= 0;
+//    mux_reg_src_alu_mem 	= 1;  
     end
 
     `OPCODE_SW: begin
@@ -144,31 +396,6 @@ always @(nrst, opcode) begin : decode_thread
       mux_reg_src_alu_mem 	= 0;  
     end
 
-    `OPCODE_BEQ: begin
-      branch 			= 1;
-      read_mem 			= 0;
-      write_mem 		= 0;
-      write_reg 		= 0;
-      alu_op 			= `ALUOP_BEQ;
-      mux_write_rt_rd 		= 0;
-      mux_alu_src_reg_imm 	= 0;
-      mux_branch_jump 		= 1;
-      mux_pc_branch 		= 1;
-      mux_reg_src_alu_mem 	= 0;  
-    end
-
-    `OPCODE_J: begin
-      branch 			= 0;
-      read_mem 			= 0;
-      write_mem 		= 0;
-      write_reg 		= 0;
-      alu_op 			= `ALUOP_TIPO_R;
-      mux_write_rt_rd 		= 0;
-      mux_alu_src_reg_imm 	= 0;
-      mux_branch_jump 		= 0;
-      mux_pc_branch 		= 0;
-      mux_reg_src_alu_mem 	= 0;  
-    end
     endcase
   end
 end
