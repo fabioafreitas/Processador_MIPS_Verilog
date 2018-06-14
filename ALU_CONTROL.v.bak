@@ -8,11 +8,11 @@
  * @author André Aziz (andre.caraujo@ufrpe.br)
  */
  
-// OP para o controle da ula
-`define ALUOP_0   2'b00 // OPERAÇÕES ARITIMÉTICAS
-`define ALUOP_1   2'b01 // OPERAÇÕES DE LÓGICA
-`define ALUOP_2   2'b10 // OPERAÇÕES DO TIPO R
-`define ALUOP_3   2'b11 // OPERAÇÕES DE DESVIO 
+//// OP para o controle da ula
+//`define ALUOP_0   2'b00
+//`define ALUOP_1   2'b01 
+//`define ALUOP_2   2'b10 
+//`define ALUOP_3   2'b11 // OPERAÇÕES TIPO R
 
 // FUNCT das instruções tipo R
 `define FUNCT_ADD   6'b100000
@@ -64,20 +64,34 @@ wire [3:0] control;
 // Este assign representa um grande switch feito com operador ternário
 // FALTA ADICIONAR AS DEMAIS OPERAÇÕES
 // REVISAR TODAS AS INSTRUÇÕES DEPOIS
-assign control = (op == ALUOP_0) ? OP_SOMA :                                 // ADDI
-                 (op == ALUOP_1) ? OP_SUBTRACAO :                            // BEQ
-                 (op == ALUOP_3 && funct == FUNCT_ADD)  ? OP_SOMA :          // ADD
-                 (op == ALUOP_3 && funct == FUNCT_ADDU) ? OP_SOMA :          // ADDU
-                 (op == ALUOP_3 && funct == FUNCT_ADD)  ? OP_ATRIBUICAO :    // JR
-                 (op == ALUOP_3 && funct == FUNCT_JR)   ? OP_ATRIBUICAO :    // AND
-                 (op == ALUOP_3 && funct == FUNCT_NOR)  ? OP_NOR :           // NOR
-                 (op == ALUOP_3 && funct == FUNCT_OR)   ? OP_OR :            // OR                  
-                 (op == ALUOP_3 && funct == FUNCT_SLT)  ? OP_MENORQUE :      // SLT
-                 (op == ALUOP_3 && funct == FUNCT_SLTU) ? OP_MENORQUE :      // SLTU
-                 (op == ALUOP_3 && funct == FUNCT_SLL)  ? OP_MULTIPLICACAO : // SLL
-                 (op == ALUOP_3 && funct == FUNCT_SRL)  ? OP_DIVISAO :       // SRL
-                 (op == ALUOP_3 && funct == FUNCT_SUB)  ? OP_SUBTRACAO :     // SUB
-                 (op == ALUOP_3 && funct == FUNCT_SUBU) ? OP_SUBTRACAO :     // SUBU
+assign control = (op == 2'b00) ? OP_SOMA :                                  // ADDI, ADDIU
+                 //(op == ALUOP_) ? OP_ :                                       // ANDI
+                 (op == 2'b01) ? OP_SUBTRACAO :                             // BEQ
+                 //(op == ALUOP_) ? OP_ :                                       // BNE
+//                 (op == ALUOP_) ? OP_ :                                       // J
+//                 (op == ALUOP_) ? OP_ :                                       // JAL
+//                 (op == ALUOP_) ? OP_ :                                       // LBU
+//                 (op == ALUOP_) ? OP_ :                                       // LHU
+//                 (op == ALUOP_) ? OP_ :                                       // LUI
+//                 (op == ALUOP_) ? OP_ :                                       // LW
+//                 (op == ALUOP_) ? OP_ :                                       // ORI
+//                 (op == ALUOP_) ? OP_ :                                       // SLTI
+//                 (op == ALUOP_) ? OP_ :                                       // SLTIU
+//                 (op == ALUOP_) ? OP_ :                                       // SB
+//                 (op == ALUOP_) ? OP_ :                                       // SH
+//                 (op == ALUOP_) ? OP_ :                                       // SW
+                 (op == 2'b11 && funct == FUNCT_ADD)  ? OP_SOMA :           // ADD
+                 (op == 2'b11 && funct == FUNCT_ADDU) ? OP_SOMA :           // ADDU
+                 (op == 2'b11 && funct == FUNCT_ADD)  ? OP_ATRIBUICAO :     // JR
+                 (op == 2'b11 && funct == FUNCT_JR)   ? OP_ATRIBUICAO :     // AND
+                 (op == 2'b11 && funct == FUNCT_NOR)  ? OP_NOR :            // NOR
+                 (op == 2'b11 && funct == FUNCT_OR)   ? OP_OR :             // OR                  
+                 (op == 2'b11 && funct == FUNCT_SLT)  ? OP_MENORQUE :       // SLT
+                 (op == 2'b11 && funct == FUNCT_SLTU) ? OP_MENORQUE :       // SLTU
+                 (op == 2'b11 && funct == FUNCT_SLL)  ? OP_MULTIPLICACAO :  // SLL
+                 (op == 2'b11 && funct == FUNCT_SRL)  ? OP_DIVISAO :        // SRL
+                 (op == 2'b11 && funct == FUNCT_SUB)  ? OP_SUBTRACAO :      // SUB
+                 (op == 2'b11 && funct == FUNCT_SUBU) ? OP_SUBTRACAO :      // SUBU
                   OP_AND; // default
 
 endmodule

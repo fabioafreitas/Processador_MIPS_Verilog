@@ -32,11 +32,12 @@
 
 
 // OP da ULA
+// INDICAR OS OPCODES RESTANTES PARA AS DEMAIS INTRUÇÕES TIPO I, NO ALU_CONTROL
 `define ALUOP_ADDI   2'b00
 `define ALUOP_LW     2'b00
 `define ALUOP_SW     2'b00
 `define ALUOP_BEQ    2'b01
-`define ALUOP_TIPO_R 2'b10
+`define ALUOP_TIPO_R 2'b11
 
 module CONTROL(
   nrst,
@@ -92,6 +93,8 @@ initial begin
   mux_reg_src_alu_mem 	= 1;
 end
 
+// AS INSTRUÇÕES TIPO R JÁ ESTÃO COM OS FIOS SETADOS CORRETAMENTE
+// FALTA SETAR ALGUNS FIOS DAS INSTRUÇÕES TIPO I E J
 always @(nrst, opcode) begin : decode_thread
 
   if (nrst == 0) begin
