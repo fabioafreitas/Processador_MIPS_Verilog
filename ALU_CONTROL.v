@@ -1,20 +1,20 @@
 /**
  * Universidade Federal Rural de Pernambuco
- * Departamento de Estatística e Informática
- * Disciplina: Arquitetura e Organização de Computadores
+ * Departamento de EstatÃ­stica e InformÃ¡tica
+ * Disciplina: Arquitetura e OrganizaÃ§Ã£o de Computadores
  * 
  * Controle da ULA
  *
- * @author André Aziz (andre.caraujo@ufrpe.br)
+ * @author AndrÃ© Aziz (andre.caraujo@ufrpe.br)
  */
  
 //// OP para o controle da ula
 //`define ALUOP_0   2'b00
 //`define ALUOP_1   2'b01 
 //`define ALUOP_2   2'b10 
-//`define ALUOP_3   2'b11 // OPERAÇÕES TIPO R
+//`define ALUOP_3   2'b11 // OPERAÃ‡Ã•ES TIPO R
 
-// FUNCT das instruções tipo R
+// FUNCT das instruÃ§Ãµes tipo R
 `define FUNCT_ADD   6'b100000
 `define FUNCT_ADDU  6'b100001
 `define FUNCT_AND   6'b100100
@@ -28,7 +28,7 @@
 `define FUNCT_SUB   6'b100010
 `define FUNCT_SUBU  6'b100011
 
-// OP code final que define a operação da ula
+// OP code final que define a operaÃ§Ã£o da ula
 `define OP_AND           4'b0000 //   A & B
 `define OP_OR            4'b0001 //   A | B
 `define OP_SOMA          4'b0010 //   A + B
@@ -60,10 +60,10 @@ wire [5:0] funct;
 wire [1:0] op;
 wire [3:0] control;
 
-// neccerário usar assign, pois always@(*) não permite uso de Wire
-// Este assign representa um grande switch feito com operador ternário
-// FALTA ADICIONAR AS DEMAIS OPERAÇÕES
-// REVISAR TODAS AS INSTRUÇÕES DEPOIS
+// neccerÃ¡rio usar assign, pois always@(*) nÃ£o permite uso de Wire
+// Este assign representa um grande switch feito com operador ternÃ¡rio
+// FALTA ADICIONAR AS DEMAIS OPERAÃ‡Ã•ES
+// REVISAR TODAS AS INSTRUÃ‡Ã•ES DEPOIS
 assign control = (op == 2'b00) ? OP_SOMA :                                  // ADDI, ADDIU
                  //(op == ALUOP_) ? OP_ :                                       // ANDI
                  (op == 2'b01) ? OP_SUBTRACAO :                             // BEQ
@@ -80,6 +80,7 @@ assign control = (op == 2'b00) ? OP_SOMA :                                  // A
 //                 (op == ALUOP_) ? OP_ :                                       // SB
 //                 (op == ALUOP_) ? OP_ :                                       // SH
 //                 (op == ALUOP_) ? OP_ :                                       // SW
+ 
                  (op == 2'b11 && funct == FUNCT_ADD)  ? OP_SOMA :           // ADD
                  (op == 2'b11 && funct == FUNCT_ADDU) ? OP_SOMA :           // ADDU
                  (op == 2'b11 && funct == FUNCT_ADD)  ? OP_ATRIBUICAO :     // JR
@@ -92,6 +93,8 @@ assign control = (op == 2'b00) ? OP_SOMA :                                  // A
                  (op == 2'b11 && funct == FUNCT_SRL)  ? OP_DIVISAO :        // SRL
                  (op == 2'b11 && funct == FUNCT_SUB)  ? OP_SUBTRACAO :      // SUB
                  (op == 2'b11 && funct == FUNCT_SUBU) ? OP_SUBTRACAO :      // SUBU
+ 
+ //              (op == 2'b10 && funct == TODAS AS FUNCT DO TIPO R
                   OP_AND; // default
 
 endmodule
