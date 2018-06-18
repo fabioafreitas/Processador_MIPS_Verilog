@@ -51,7 +51,7 @@ always @ (A or B or OP) begin : operacoes_ula
   // 2 
   // S = A + B
   4'b0010: begin
-    S = A + B;
+    S = A +  B;
   end
 	
 	// 3

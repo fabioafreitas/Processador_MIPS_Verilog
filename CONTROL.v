@@ -37,7 +37,7 @@
 `define ALUOP_LW     2'b00
 `define ALUOP_SW     2'b00
 `define ALUOP_BEQ    2'b01
-`define ALUOP_TIPO_R 2'b11
+`define ALUOP_TIPO_R 2'b10
 
 module CONTROL(
   nrst,
