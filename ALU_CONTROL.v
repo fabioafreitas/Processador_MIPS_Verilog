@@ -95,5 +95,6 @@ assign control = (op == `ALUOP_00) ? `OP_SOMA :                                 
                  (op == `ALUOP_10 && funct == `FUNCT_SUBU) ? `OP_SUBTRACAO :      // SUBU
  //              (op == 2'b10 && funct == TODAS AS FUNCT DO TIPO R
                   `OP_AND; // default
+                  // quando for 0x0000000d ($finish) IMPORTANTE IMPORTANTE IMPORTANTE
 
 endmodule
