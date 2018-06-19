@@ -9,10 +9,10 @@
  */
  
 //// OP para o controle da ula
-`define ALUOP_0   2'b00 // soma
-`define ALUOP_1   2'b01 // subtracao
-`define ALUOP_2   2'b10 // tipo R
-`define ALUOP_3   2'b11 // n„o È usado
+`define ALUOP_00   2'b00 // soma
+`define ALUOP_01   2'b01 // subtracao
+`define ALUOP_10   2'b10 // tipo R
+`define ALUOP_11   2'b11 // n„o È usado
 
 // FUNCT das instru√ß√µes tipo R
 `define FUNCT_ADD   6'b100000

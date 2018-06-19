@@ -33,11 +33,11 @@
 `define OP_OR            4'b0001 //   A | B
 `define OP_SOMA          4'b0010 //   A + B
 `define OP_ATRIBUICAO    4'b0011 //   A = B, A recebe B
-`define OP_4            4'b0100
-`define OP_5            4'b0101
+`define OP_4             4'b0100
+`define OP_5             4'b0101
 `define OP_SUBTRACAO     4'b0110 //   A - B
 `define OP_MENORQUE      4'b0111 //   A < B
-`define OP_8            4'b1000
+`define OP_8             4'b1000
 `define OP_MULTIPLICACAO 4'b1001 //   A << B
 `define OP_DIVISAO       4'b1010 //   A >> B
 `define OP_11            4'b1011
@@ -64,9 +64,9 @@ wire [3:0] control;
 // Este assign representa um grande switch feito com operador ternário
 // FALTA ADICIONAR AS DEMAIS OPERAÇÕES
 // REVISAR TODAS AS INSTRUÇÕES DEPOIS
-assign control = (op == 2'b00) ? `OP_SOMA :                                  // ADDI, ADDIU
+assign control = (op == `ALUOP_00) ? `OP_SOMA :                                  // ADDI, ADDIU
                  //(op == ALUOP_) ? OP_ :                                       // ANDI
-                 (op == 2'b01) ? `OP_SUBTRACAO :                             // BEQ
+                 (op == `ALUOP_01) ? `OP_SUBTRACAO :                             // BEQ
                  //(op == ALUOP_) ? OP_ :                                       // BNE
 //                 (op == ALUOP_) ? OP_ :                                       // J
 //                 (op == ALUOP_) ? OP_ :                                       // JAL
@@ -93,7 +93,6 @@ assign control = (op == 2'b00) ? `OP_SOMA :                                  // 
                  (op == `ALUOP_10 && funct == `FUNCT_SRL)  ? `OP_DIVISAO :        // SRL
                  (op == `ALUOP_10 && funct == `FUNCT_SUB)  ? `OP_SUBTRACAO :      // SUB
                  (op == `ALUOP_10 && funct == `FUNCT_SUBU) ? `OP_SUBTRACAO :      // SUBU
- 
  //              (op == 2'b10 && funct == TODAS AS FUNCT DO TIPO R
                   `OP_AND; // default
 
