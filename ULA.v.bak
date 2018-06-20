@@ -12,18 +12,21 @@ module ULA (
   A,   	       // Operando A
   B,           // Operando B
   S,           // Resultado
+  SHAMT,       // valor do shamt que sai da instrução
   OP,          // Seleção da operação
   Z            // Indica que o resultado é zero.
 );
 
 input [31:0] A;
 input [31:0] B;
-input [3:0] OP;
+input [4:0] OP;     // foi estendido para 5 bits, pois 16 operacoes nao eram suficientes
+input [4:0] SHAMT;  // modificaçao do shamt
 output [31:0] S;
 output Z;
 
 wire signed [31:0] A, B;
-wire [3:0] OP;
+wire [4:0] OP;      // foi estendido para 5 bits
+wire [4:0] SHAMT;   // modificaçao do shamt
 reg signed [31:0] S;
 reg Z;
 
@@ -36,97 +39,104 @@ always @ (A or B or OP) begin : operacoes_ula
 
   case (OP)
 	
-	// 0
-  // S = A & B
-  4'b0000: begin 
+	// 0     S = A & B
+  5'b00000: begin 
     S = A & B;
   end
 	
-	// 1		
-  // S = A | B
-  4'b0001: begin
+	// 1     S = A | B
+  5'b00001: begin
     S = A | B;  
   end
   
-  // 2 
-  // S = A + B
-  4'b0010: begin
+  // 2     S = A + B
+  5'b00010: begin
     S = A + B;
   end
 	
-	// 3
-	// S = A
-	4'b0011: begin
-    S = A;
+	// 3     S = A  atribuição
+	5'b00011: begin
+    S = A + 32'b0;
   end
 	
-	// 4
-	4'b0100: begin
-    
+	// 4     zero = (A == B)? 1:0
+	5'b00100: begin
+    Z = (A == B)? 1:0;
   end
 	
 	
-	// 5
-	4'b0101: begin
-    
+	// 5     zero = (A != B)? 1:0
+	5'b00101: begin
+    Z = (A != B)? 1:0;
   end
 	
-	// 6
-  // S = A - B 
-  4'b0110: begin
+	// 6     S = A - B 
+  5'b00110: begin
     S = A - B;
   end
 
-  // 7
-  // S = A < B
-  4'b0111: begin
+  // 7     S = (A < B) ? 1 : 0;
+  5'b00111: begin
     S = (A < B) ? 1 : 0;
   end
 	
-	// 8
-	4'b1000: begin
-    
+	// 8     S = B << 16
+	5'b01000: begin
+    S = B << 5'b10000;
   end
 	
-	// 9
-	// S = A << B
-	4'b1001: begin
-    S = A << B;
+	// 9     S = A << B 
+	5'b01001: begin
+    S = A << SHAMT;
   end
 	
-	// 10
-	// S = A >> B
-	4'b1010: begin
-    S = A >> B;
+	// 10     S = A >> B
+	5'b01010: begin
+    S = A >> SHAMT;
   end
 	
-	// 11
-	4'b1011: begin
-    
-  end
-	
-	
-	// 12
-  // S = ~(A | B)
-  4'b1100: begin
+	// 11     S = ~(A | B)
+	5'b01011: begin
     S = ~(A | B);
   end
+	
+	// 12     load byte unsigned
+  5'b01100: begin
+    
+  end
   
-  
-  // 13
-  4'b1101: begin
+  // 13     load half unsigned
+  5'b01101: begin
     
   end
 	
-	
-	// 14
-	4'b1110: begin
+	// 14     load word
+	5'b01110: begin
     
   end
 	
-	
-	// 15
-	4'b1111: begin
+	// 15     store byte
+	5'b01111: begin
+    
+  end
+  
+  // 16     store half
+	5'b10000: begin
+    
+  end
+  
+  // 17     store word
+	5'b10001: begin
+    
+  end
+  
+  // 18
+	5'b10010: begin
+    
+  end
+  
+  // 19
+	5'b10011: begin
     
   end
   

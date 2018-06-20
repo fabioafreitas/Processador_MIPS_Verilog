@@ -12,6 +12,8 @@ module MIPS (
   nrst
 );
 
+// FALTA IMPLEMENTAR A LÓGICA DE BRANCH CONDICIONAL
+
 input clk;
 input nrst;
 

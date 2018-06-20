@@ -128,7 +128,8 @@ MUX21 mux_alu_src_reg_imm (
 ULA ula (
   .A(REGISTER_BANK_read_data_1_out),   	       
   .B(MUX_ALU_SRC_REG_IMM_out),           
-  .S(ULA_out),           
+  .S(ULA_out),
+  .SHAMT(IMEM_instr[10:6]),    // moficação feita, acrescentei o shamt à ula           
   .OP(ALU_CONTROL_out),          
   .Z(ULA_zero)            
 );

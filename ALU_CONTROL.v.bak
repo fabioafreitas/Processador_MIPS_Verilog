@@ -8,11 +8,23 @@
  * @author Andr√© Aziz (andre.caraujo@ufrpe.br)
  */
  
-//// OP para o controle da ula
-`define ALUOP_00   2'b00 // soma
-`define ALUOP_01   2'b01 // subtracao
-`define ALUOP_10   2'b10 // tipo R
-`define ALUOP_11   2'b11 // n„o È usado
+// OP para o controle da ula
+`define ALUOP_0   4'b0000 // SOMA
+`define ALUOP_1   4'b0001 // OR
+`define ALUOP_2   4'b0010 // PARA INSTRUCOES TIPO R
+`define ALUOP_3   4'b0011 // AND
+`define ALUOP_4   4'b0100 // BEQ
+`define ALUOP_5   4'b0101 // BNE
+`define ALUOP_6   4'b0110 // Set Less (SLT, SLTI, SLTIU, SLTU)
+`define ALUOP_7   4'b0111 // LUI
+`define ALUOP_8   4'b1000 // LBU
+`define ALUOP_9   4'b1001 // LHU
+`define ALUOP_A   4'b1010 // LW
+`define ALUOP_B   4'b1011 // SB
+`define ALUOP_C   4'b1100 // SH
+`define ALUOP_D   4'b1101 // SW
+`define ALUOP_E   4'b1110 // ainda nao utilizado
+`define ALUOP_F   4'b1111 // ainda nao utilizado
 
 // FUNCT das instru√ß√µes tipo R
 `define FUNCT_ADD   6'b100000
@@ -27,24 +39,30 @@
 `define FUNCT_SRL   6'b000010
 `define FUNCT_SUB   6'b100010
 `define FUNCT_SUBU  6'b100011
+`define ENCERRAR_SIMULACAO 6'b001101  // 0X0000000D ENCERRA A SIMULA«√O
 
 // OP code final que define a opera√ß√£o da ula
-`define OP_AND           4'b0000 //   A & B
-`define OP_OR            4'b0001 //   A | B
-`define OP_SOMA          4'b0010 //   A + B
-`define OP_ATRIBUICAO    4'b0011 //   A = B, A recebe B
-`define OP_4             4'b0100
-`define OP_5             4'b0101
-`define OP_SUBTRACAO     4'b0110 //   A - B
-`define OP_MENORQUE      4'b0111 //   A < B
-`define OP_8             4'b1000
-`define OP_MULTIPLICACAO 4'b1001 //   A << B
-`define OP_DIVISAO       4'b1010 //   A >> B
-`define OP_11            4'b1011
-`define OP_NOR           4'b1100 // ~(A | B)  
-`define OP_13            4'b1101
-`define OP_14            4'b1110
-`define OP_15            4'b1111
+`define OP_AND           5'b00000 //   A & B
+`define OP_OR            5'b00001 //   A | B
+`define OP_SOMA          5'b00010 //   A + B
+`define OP_ATRIBUICAO    5'b00011 //   A = B, A recebe B
+`define OP_BEQ           5'b00100 //   Zero = (A == B)? 1:0
+`define OP_BNE           5'b00101 //   Zero = (A != B)? 1:0
+`define OP_SUBTRACAO     5'b00110 //   A - B
+`define OP_SLT           5'b00111 //   (A < B)? 1:0 
+`define OP_LUI           5'b01000 //   B << 16
+`define OP_SLL           5'b01001 //   A << B
+`define OP_SRL           5'b01010 //   A >> B
+`define OP_NOR           5'b01011 //   ~(A | B)
+`define OP_LBU           5'b01100 // load byte word unsigned
+`define OP_LHU           5'b01101 // load half word unsigned
+`define OP_LW            5'b01110 // load word
+`define OP_SB            5'b01111 // store byte word
+`define OP_SH            5'b10000 // store half word
+`define OP_SW            5'b10001 // store word
+`define OP_18            5'b10010 // ainda nao utilizado
+`define OP_19            5'b10011 // ainda nao utilizado
+
 
 module ALU_CONTROL (
   funct,
@@ -57,43 +75,44 @@ input op;
 output control;
 
 wire [5:0] funct;
-wire [1:0] op;
+wire [3:0] op;    // FOI ESTENDIDO PARA 4 BITS PARA PODER MANIPULAR MAIS INSTRUCOES
 wire [3:0] control;
 
-// neccer√°rio usar assign, pois always@(*) n√£o permite uso de Wire
-// Este assign representa um grande switch feito com operador tern√°rio
-// FALTA ADICIONAR AS DEMAIS OPERA√á√ïES
-// REVISAR TODAS AS INSTRU√á√ïES DEPOIS
-assign control = (op == `ALUOP_00) ? `OP_SOMA :                                  // ADDI, ADDIU
-                 //(op == ALUOP_) ? OP_ :                                       // ANDI
-                 (op == `ALUOP_01) ? `OP_SUBTRACAO :                             // BEQ
-                 //(op == ALUOP_) ? OP_ :                                       // BNE
-//                 (op == ALUOP_) ? OP_ :                                       // J
-//                 (op == ALUOP_) ? OP_ :                                       // JAL
-//                 (op == ALUOP_) ? OP_ :                                       // LBU
-//                 (op == ALUOP_) ? OP_ :                                       // LHU
-//                 (op == ALUOP_) ? OP_ :                                       // LUI
-//                 (op == ALUOP_) ? OP_ :                                       // LW
-//                 (op == ALUOP_) ? OP_ :                                       // ORI
-//                 (op == ALUOP_) ? OP_ :                                       // SLTI
-//                 (op == ALUOP_) ? OP_ :                                       // SLTIU
-//                 (op == ALUOP_) ? OP_ :                                       // SB
-//                 (op == ALUOP_) ? OP_ :                                       // SH
-//                 (op == ALUOP_) ? OP_ :                                       // SW
+assign control = (op == `ALUOP_0) ? `OP_SOMA :                                 // ADDI e ADDIU
+                 (op == `ALUOP_3) ? `OP_AND :                                  // ANDI
+                 (op == `ALUOP_4) ? `OP_BEQ :                                  // BEQ
+                 (op == `ALUOP_5) ? `OP_BNE :                                  // BNE
+//       *         (op == `ALUOP_) ? `OP_ :                                       // J
+//       *         (op == `ALUOP_) ? `OP_ :                                       // JAL
+                 (op == `ALUOP_8) ? `OP_LHU :                                  // LBU
+                 (op == `ALUOP_9) ? `OP_LBU :                                  // LHU
+                 (op == `ALUOP_7) ? `OP_LUI :                                  // LUI
+                 (op == `ALUOP_A) ? `OP_LW :                                   // LW
+                 (op == `ALUOP_1) ? `OP_OR :                                   // ORI
+                 (op == `ALUOP_6) ? `OP_SLT :                                  // SLTI e SLTIU
+                 (op == `ALUOP_B) ? `OP_SB :                                   // SB
+                 (op == `ALUOP_C) ? `OP_SH :                                   // SH
+                 (op == `ALUOP_D) ? `OP_SW :                                   // SW
+                 (op == `ALUOP_2 && funct == `FUNCT_ADD)  ? `OP_SOMA :         // ADD
+                 (op == `ALUOP_2 && funct == `FUNCT_ADDU) ? `OP_SOMA :         // ADDU
+                 (op == `ALUOP_2 && funct == `FUNCT_AND)  ? `OP_AND :          // AND
+//       *         (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_ATRIBUICAO :   // JR
+                 (op == `ALUOP_2 && funct == `FUNCT_NOR)  ? `OP_NOR :          // NOR
+                 (op == `ALUOP_2 && funct == `FUNCT_OR)   ? `OP_OR :           // OR                  
+                 (op == `ALUOP_2 && funct == `FUNCT_SLT)  ? `OP_SLT :          // SLT
+                 (op == `ALUOP_2 && funct == `FUNCT_SLTU) ? `OP_SLT :          // SLTU
+                 (op == `ALUOP_2 && funct == `FUNCT_SLL)  ? `OP_SLL :          // SLL
+                 (op == `ALUOP_2 && funct == `FUNCT_SRL)  ? `OP_SRL :          // SRL
+                 (op == `ALUOP_2 && funct == `FUNCT_SUB)  ? `OP_SUBTRACAO :    // SUB
+                 (op == `ALUOP_2 && funct == `FUNCT_SUBU) ? `OP_SUBTRACAO :    // SUBU
+                 `OP_AND; // default
+        
+// lÛgica que encerra a simulaÁ„o do processador
+always@(*) begin
+  if( funct == `ENCERRAR_SIMULACAO) $finish;
+end
 
-                 (op == `ALUOP_10 && funct == `FUNCT_ADD)  ? `OP_SOMA :           // ADD
-                 (op == `ALUOP_10 && funct == `FUNCT_ADDU) ? `OP_SOMA :           // ADDU
-                 (op == `ALUOP_10 && funct == `FUNCT_AND)  ? `OP_ATRIBUICAO :     // AND
-                 (op == `ALUOP_10 && funct == `FUNCT_JR)   ? `OP_ATRIBUICAO :     // JR
-                 (op == `ALUOP_10 && funct == `FUNCT_NOR)  ? `OP_NOR :            // NOR
-                 (op == `ALUOP_10 && funct == `FUNCT_OR)   ? `OP_OR :             // OR                  
-                 (op == `ALUOP_10 && funct == `FUNCT_SLT)  ? `OP_MENORQUE :       // SLT
-                 (op == `ALUOP_10 && funct == `FUNCT_SLTU) ? `OP_MENORQUE :       // SLTU
-                 (op == `ALUOP_10 && funct == `FUNCT_SLL)  ? `OP_MULTIPLICACAO :  // SLL
-                 (op == `ALUOP_10 && funct == `FUNCT_SRL)  ? `OP_DIVISAO :        // SRL
-                 (op == `ALUOP_10 && funct == `FUNCT_SUB)  ? `OP_SUBTRACAO :      // SUB
-                 (op == `ALUOP_10 && funct == `FUNCT_SUBU) ? `OP_SUBTRACAO :      // SUBU
- //              (op == 2'b10 && funct == TODAS AS FUNCT DO TIPO R
-                  `OP_AND; // default
+
+
 
 endmodule
