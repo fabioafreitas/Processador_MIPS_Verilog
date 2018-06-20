@@ -130,6 +130,16 @@ always @ (A or B or OP) begin : operacoes_ula
     
   end
   
+  // 18     jump
+	5'b10010: begin
+    
+  end
+  
+  // 19     jump and link
+	5'b10011: begin
+    
+  end
+  
   default: begin
     S = 0;
   end

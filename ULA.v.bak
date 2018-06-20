@@ -130,12 +130,12 @@ always @ (A or B or OP) begin : operacoes_ula
     
   end
   
-  // 18
+  // 18     store word
 	5'b10010: begin
     
   end
   
-  // 19
+  // 19     store word
 	5'b10011: begin
     
   end

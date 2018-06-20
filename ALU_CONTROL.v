@@ -23,8 +23,8 @@
 `define ALUOP_B   4'b1011 // SB
 `define ALUOP_C   4'b1100 // SH
 `define ALUOP_D   4'b1101 // SW
-`define ALUOP_E   4'b1110 // ainda nao utilizado
-`define ALUOP_F   4'b1111 // ainda nao utilizado
+`define ALUOP_E   4'b1110 // J
+`define ALUOP_F   4'b1111 // JAL
 
 // FUNCT das instruÃ§Ãµes tipo R
 `define FUNCT_ADD   6'b100000
@@ -48,20 +48,20 @@
 `define OP_ATRIBUICAO    5'b00011 //   A = B, A recebe B
 `define OP_BEQ           5'b00100 //   Zero = (A == B)? 1:0
 `define OP_BNE           5'b00101 //   Zero = (A != B)? 1:0
-`define OP_SUBTRACAO     5'b00110 //   A - B
+`define OP_SUB           5'b00110 //   A - B
 `define OP_SLT           5'b00111 //   (A < B)? 1:0 
 `define OP_LUI           5'b01000 //   B << 16
 `define OP_SLL           5'b01001 //   A << B
 `define OP_SRL           5'b01010 //   A >> B
 `define OP_NOR           5'b01011 //   ~(A | B)
-`define OP_LBU           5'b01100 // load byte word unsigned
-`define OP_LHU           5'b01101 // load half word unsigned
-`define OP_LW            5'b01110 // load word
-`define OP_SB            5'b01111 // store byte word
-`define OP_SH            5'b10000 // store half word
-`define OP_SW            5'b10001 // store word
-`define OP_18            5'b10010 // ainda nao utilizado
-`define OP_19            5'b10011 // ainda nao utilizado
+`define OP_LBU           5'b01100 // load byte word unsigned (LBU)
+`define OP_LHU           5'b01101 // load half word unsigned (LHU)
+`define OP_LW            5'b01110 // load word               (LW)
+`define OP_SB            5'b01111 // store byte              (SB)
+`define OP_SH            5'b10000 // store half              (SH)
+`define OP_SW            5'b10001 // store word              (SW)
+`define OP_J             5'b10010 // jump                    (J)
+`define OP_JAL           5'b10011 // jump and link           (JAL)
 
 
 module ALU_CONTROL (
@@ -82,29 +82,29 @@ assign control = (op == `ALUOP_0) ? `OP_SOMA :                                 /
                  (op == `ALUOP_3) ? `OP_AND :                                  // ANDI
                  (op == `ALUOP_4) ? `OP_BEQ :                                  // BEQ
                  (op == `ALUOP_5) ? `OP_BNE :                                  // BNE
-//       *         (op == `ALUOP_) ? `OP_ :                                       // J
-//       *         (op == `ALUOP_) ? `OP_ :                                       // JAL
-                 (op == `ALUOP_8) ? `OP_LHU :                                  // LBU
-                 (op == `ALUOP_9) ? `OP_LBU :                                  // LHU
+                 (op == `ALUOP_E) ? `OP_J :                                    // J         FALTA FAZER NA ULA
+                 (op == `ALUOP_F) ? `OP_JAL :                                  // JAL       FALTA FAZER NA ULA
+                 (op == `ALUOP_8) ? `OP_LHU :                                  // LBU       FALTA FAZER NA ULA
+                 (op == `ALUOP_9) ? `OP_LBU :                                  // LHU       FALTA FAZER NA ULA
                  (op == `ALUOP_7) ? `OP_LUI :                                  // LUI
-                 (op == `ALUOP_A) ? `OP_LW :                                   // LW
+                 (op == `ALUOP_A) ? `OP_LW :                                   // LW        FALTA FAZER NA ULA
                  (op == `ALUOP_1) ? `OP_OR :                                   // ORI
                  (op == `ALUOP_6) ? `OP_SLT :                                  // SLTI e SLTIU
-                 (op == `ALUOP_B) ? `OP_SB :                                   // SB
-                 (op == `ALUOP_C) ? `OP_SH :                                   // SH
-                 (op == `ALUOP_D) ? `OP_SW :                                   // SW
+                 (op == `ALUOP_B) ? `OP_SB :                                   // SB        FALTA FAZER NA ULA
+                 (op == `ALUOP_C) ? `OP_SH :                                   // SH        FALTA FAZER NA ULA
+                 (op == `ALUOP_D) ? `OP_SW :                                   // SW        FALTA FAZER NA ULA
                  (op == `ALUOP_2 && funct == `FUNCT_ADD)  ? `OP_SOMA :         // ADD
                  (op == `ALUOP_2 && funct == `FUNCT_ADDU) ? `OP_SOMA :         // ADDU
                  (op == `ALUOP_2 && funct == `FUNCT_AND)  ? `OP_AND :          // AND
-//       *         (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_ATRIBUICAO :   // JR
+                 (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_ATRIBUICAO :   // JR        FALTA FAZER NA ULA
                  (op == `ALUOP_2 && funct == `FUNCT_NOR)  ? `OP_NOR :          // NOR
                  (op == `ALUOP_2 && funct == `FUNCT_OR)   ? `OP_OR :           // OR                  
                  (op == `ALUOP_2 && funct == `FUNCT_SLT)  ? `OP_SLT :          // SLT
                  (op == `ALUOP_2 && funct == `FUNCT_SLTU) ? `OP_SLT :          // SLTU
                  (op == `ALUOP_2 && funct == `FUNCT_SLL)  ? `OP_SLL :          // SLL
                  (op == `ALUOP_2 && funct == `FUNCT_SRL)  ? `OP_SRL :          // SRL
-                 (op == `ALUOP_2 && funct == `FUNCT_SUB)  ? `OP_SUBTRACAO :    // SUB
-                 (op == `ALUOP_2 && funct == `FUNCT_SUBU) ? `OP_SUBTRACAO :    // SUBU
+                 (op == `ALUOP_2 && funct == `FUNCT_SUB)  ? `OP_SUB :          // SUB
+                 (op == `ALUOP_2 && funct == `FUNCT_SUBU) ? `OP_SUB :          // SUBU
                  `OP_AND; // default
         
 // lógica que encerra a simulação do processador
