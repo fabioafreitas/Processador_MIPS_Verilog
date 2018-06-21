@@ -42,26 +42,26 @@
 `define ENCERRAR_SIMULACAO 6'b001101  // 0X0000000D ENCERRA A SIMULA«√O
 
 // OP code final que define a opera√ß√£o da ula
-`define OP_AND           5'b00000 //   A & B
-`define OP_OR            5'b00001 //   A | B
-`define OP_SOMA          5'b00010 //   A + B
-`define OP_ATRIBUICAO    5'b00011 //   A = B, A recebe B
-`define OP_BEQ           5'b00100 //   Zero = (A == B)? 1:0
-`define OP_BNE           5'b00101 //   Zero = (A != B)? 1:0
-`define OP_SUB           5'b00110 //   A - B
-`define OP_SLT           5'b00111 //   (A < B)? 1:0 
-`define OP_LUI           5'b01000 //   B << 16
-`define OP_SLL           5'b01001 //   A << B
-`define OP_SRL           5'b01010 //   A >> B
-`define OP_NOR           5'b01011 //   ~(A | B)
-`define OP_LBU           5'b01100 // load byte word unsigned (LBU)
-`define OP_LHU           5'b01101 // load half word unsigned (LHU)
-`define OP_LW            5'b01110 // load word               (LW)
-`define OP_SB            5'b01111 // store byte              (SB)
-`define OP_SH            5'b10000 // store half              (SH)
-`define OP_SW            5'b10001 // store word              (SW)
-`define OP_J             5'b10010 // jump                    (J)
-`define OP_JAL           5'b10011 // jump and link           (JAL)
+`define OP_AND  5'b00000 //   A & B
+`define OP_OR   5'b00001 //   A | B
+`define OP_SOMA 5'b00010 //   A + B
+`define OP_JR   5'b00011 //   
+`define OP_BEQ  5'b00100 //   Zero = (A == B)? 1:0
+`define OP_BNE  5'b00101 //   Zero = (A != B)? 1:0
+`define OP_SUB  5'b00110 //   A - B
+`define OP_SLT  5'b00111 //   (A < B)? 1:0 
+`define OP_LUI  5'b01000 //   B << 16
+`define OP_SLL  5'b01001 //   A << B
+`define OP_SRL  5'b01010 //   A >> B
+`define OP_NOR  5'b01011 //   ~(A | B)
+`define OP_LBU  5'b01100 // load byte word unsigned (LBU)
+`define OP_LHU  5'b01101 // load half word unsigned (LHU)
+`define OP_LW   5'b01110 // load word               (LW)
+`define OP_SB   5'b01111 // store byte              (SB)
+`define OP_SH   5'b10000 // store half              (SH)
+`define OP_SW   5'b10001 // store word              (SW)
+`define OP_J    5'b10010 // jump                    (J)
+`define OP_JAL  5'b10011 // jump and link           (JAL)
 
 
 module ALU_CONTROL (
@@ -96,7 +96,7 @@ assign control = (op == `ALUOP_0) ? `OP_SOMA :                                 /
                  (op == `ALUOP_2 && funct == `FUNCT_ADD)  ? `OP_SOMA :         // ADD
                  (op == `ALUOP_2 && funct == `FUNCT_ADDU) ? `OP_SOMA :         // ADDU
                  (op == `ALUOP_2 && funct == `FUNCT_AND)  ? `OP_AND :          // AND
-                 (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_ATRIBUICAO :   // JR        FALTA FAZER NA ULA
+                 (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_JR :           // JR        FALTA FAZER NA ULA
                  (op == `ALUOP_2 && funct == `FUNCT_NOR)  ? `OP_NOR :          // NOR
                  (op == `ALUOP_2 && funct == `FUNCT_OR)   ? `OP_OR :           // OR                  
                  (op == `ALUOP_2 && funct == `FUNCT_SLT)  ? `OP_SLT :          // SLT

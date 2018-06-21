@@ -56,7 +56,7 @@ always @ (A or B or OP) begin : operacoes_ula
 	
 	// 3     S = A  atribuição
 	5'b00011: begin
-    S = A + 32'b0;
+    S = A + 32'h0000;
   end
 	
 	// 4     zero = (A == B)? 1:0
