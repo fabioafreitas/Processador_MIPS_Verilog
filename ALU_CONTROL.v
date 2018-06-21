@@ -87,7 +87,7 @@ assign control = (op == `ALUOP_0) ? `OP_SOMA :                                 /
                  (op == `ALUOP_8) ? `OP_LHU :                                  // LBU       FALTA FAZER NA ULA
                  (op == `ALUOP_9) ? `OP_LBU :                                  // LHU       FALTA FAZER NA ULA
                  (op == `ALUOP_7) ? `OP_LUI :                                  // LUI
-                 (op == `ALUOP_A) ? `OP_LW :                                   // LW        FALTA FAZER NA ULA
+                 (op == `ALUOP_A) ? `OP_LW :                                   // LW
                  (op == `ALUOP_1) ? `OP_OR :                                   // ORI
                  (op == `ALUOP_6) ? `OP_SLT :                                  // SLTI e SLTIU
                  (op == `ALUOP_B) ? `OP_SB :                                   // SB        FALTA FAZER NA ULA

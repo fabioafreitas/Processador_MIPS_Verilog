@@ -45,7 +45,7 @@
 `define OP_AND  5'b00000 //   A & B
 `define OP_OR   5'b00001 //   A | B
 `define OP_SOMA 5'b00010 //   A + B
-`define OP_JR   5'b00011 //   A = B, A recebe B
+`define OP_JR   5'b00011 //   
 `define OP_BEQ  5'b00100 //   Zero = (A == B)? 1:0
 `define OP_BNE  5'b00101 //   Zero = (A != B)? 1:0
 `define OP_SUB  5'b00110 //   A - B
@@ -96,7 +96,7 @@ assign control = (op == `ALUOP_0) ? `OP_SOMA :                                 /
                  (op == `ALUOP_2 && funct == `FUNCT_ADD)  ? `OP_SOMA :         // ADD
                  (op == `ALUOP_2 && funct == `FUNCT_ADDU) ? `OP_SOMA :         // ADDU
                  (op == `ALUOP_2 && funct == `FUNCT_AND)  ? `OP_AND :          // AND
-                 (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_JR :           // JR
+                 (op == `ALUOP_2 && funct == `FUNCT_JR)   ? `OP_JR :           // JR        FALTA FAZER NA ULA
                  (op == `ALUOP_2 && funct == `FUNCT_NOR)  ? `OP_NOR :          // NOR
                  (op == `ALUOP_2 && funct == `FUNCT_OR)   ? `OP_OR :           // OR                  
                  (op == `ALUOP_2 && funct == `FUNCT_SLT)  ? `OP_SLT :          // SLT
