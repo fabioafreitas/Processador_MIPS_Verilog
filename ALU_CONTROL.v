@@ -39,7 +39,6 @@
 `define FUNCT_SRL   6'b000010
 `define FUNCT_SUB   6'b100010
 `define FUNCT_SUBU  6'b100011
-`define ENCERRAR_SIMULACAO 6'b001101  // 0X0000000D ENCERRA A SIMULAÇÃO
 
 // OP code final que define a operaÃ§Ã£o da ula
 `define OP_AND  5'b00000 //   A & B
@@ -107,9 +106,5 @@ assign control = (op == `ALUOP_0) ? `OP_SOMA :                                 /
                  (op == `ALUOP_2 && funct == `FUNCT_SUBU) ? `OP_SUB :          // SUBU
                  `OP_AND; // default
         
-// lógica que encerra a simulação do processador
-always@(*) begin
-  if( funct == `ENCERRAR_SIMULACAO) $finish;
-end
 
 endmodule

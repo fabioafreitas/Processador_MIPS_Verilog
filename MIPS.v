@@ -7,6 +7,9 @@
  *
  * @author André Aziz (andre.caraujo@ufrpe.br)
  */
+ 
+`define ENCERRAR_SIMULACAO 32'h0000000d 
+ 
 module MIPS (
   clk, 
   nrst
@@ -64,6 +67,11 @@ wire CONTROL_mux_pc_branch;
 wire CONTROL_mux_reg_src_alu_mem;
 
 assign FOUR_CONST = 4;
+
+// lógica que encerra a simulação do processador
+always@(*) begin
+  if( IMEM_instr == `ENCERRAR_SIMULACAO) $finish;
+end
 
 CONTROL control (
   .nrst(nrst),
