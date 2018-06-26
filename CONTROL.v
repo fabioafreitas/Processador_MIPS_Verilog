@@ -15,13 +15,13 @@
 `define OPCODE_ANDI   6'b001100
 `define OPCODE_BEQ    6'b000100
 `define OPCODE_BNE    6'b000101
-`define OPCODE_J      6'b000010
-`define OPCODE_JAL    6'b000011
-`define OPCODE_LBU    6'b100100
-`define OPCODE_LHU    6'b100101
+`define OPCODE_J      6'b000010    //                           OK
+`define OPCODE_JAL    6'b000011    //                           OK
+`define OPCODE_LBU    6'b100100    //                           
+`define OPCODE_LHU    6'b100101    //                           OK
 //`define OPCODE_LL     6'b110000
-`define OPCODE_LUI    6'b001111
-`define OPCODE_LW     6'b100011
+`define OPCODE_LUI    6'b001111    //                           OK
+`define OPCODE_LW     6'b100011    //                           OK
 `define OPCODE_ORI    6'b001101
 `define OPCODE_SLTI   6'b001010
 `define OPCODE_SLTIU  6'b001011
@@ -41,16 +41,16 @@
 `define ALUOP_BNE       4'b0101  // bne
 `define ALUOP_SLT       4'b0110  // slt, slti, sltiu, sltu
 `define ALUOP_LUI       4'b0111  // lui
-`define ALUOP_LBU       4'b1000  // blu
-`define ALUOP_LHU       4'b1001  // lhu
-`define ALUOP_LW        4'b1010  // lw
+`define ALUOP_LBU       4'b1000  // lbu                           
+`define ALUOP_LHU       4'b1001  // lhu                           
+`define ALUOP_LW        4'b1010  // lw                            
 `define ALUOP_SB        4'b1011  // sb
 `define ALUOP_SH        4'b1100  // sh
 `define ALUOP_SW        4'b1101  // sw
-`define ALUOP_J         4'b1110  // ainda nao foi utilizado
-`define ALUOP_JAL       4'b1111  // ainda nao foi utilizado
+`define ALUOP_J         4'b1110  // ainda nao foi utilizado       
+`define ALUOP_JAL       4'b1111  // ainda nao foi utilizado       
 
-module CONTROL(
+C:/Users/Aluno/Desktop/Projeto_3_Arquitetura/CONTROL.vmodule CONTROL(
   nrst,
   opcode,
   branch,
@@ -123,7 +123,7 @@ always @(nrst, opcode) begin : decode_thread
   else begin
     case (opcode)
  
-    `OPCODE_TIPO_R: begin
+    `OPCODE_TIPO_R: begin         // verificado    
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
@@ -131,8 +131,8 @@ always @(nrst, opcode) begin : decode_thread
       alu_op 			= `ALUOP_TIPO_R;
       mux_write_rt_rd 		= 1;
       mux_alu_src_reg_imm 	= 0;
-      mux_branch_jump 		= 1;
-      mux_pc_branch 		= 0;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
       mux_reg_src_alu_mem 	= 1;  
     end
   
@@ -201,7 +201,7 @@ always @(nrst, opcode) begin : decode_thread
       mux_reg_src_alu_mem 	= 0;
     end
     
-    `OPCODE_J: begin
+    `OPCODE_J: begin         // verificado    
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
@@ -209,12 +209,12 @@ always @(nrst, opcode) begin : decode_thread
       alu_op 			= `ALUOP_J;
       mux_write_rt_rd 		= 0;
       mux_alu_src_reg_imm 	= 0;
-      mux_branch_jump 		= 0;
-      mux_pc_branch 		= 0;
+      mux_branch_jump 		= 1;
+      mux_pc_branch 		= 1;
       mux_reg_src_alu_mem 	= 0;  
     end
     
-    `OPCODE_JAL: begin
+    `OPCODE_JAL: begin      // verificado
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
@@ -222,72 +222,72 @@ always @(nrst, opcode) begin : decode_thread
       alu_op 			= `ALUOP_JAL;
       mux_write_rt_rd 		= 0;
       mux_alu_src_reg_imm 	= 0;
-      mux_branch_jump 		= 0;
-      mux_pc_branch 		= 0;
+      mux_branch_jump 		= 1;
+      mux_pc_branch 		= 1;
       mux_reg_src_alu_mem 	= 0;  
     end
     
-    `OPCODE_LBU: begin
-//    branch 			= 0;
-//    read_mem 			= 0;
-//    write_mem 		= 0;
-//    write_reg 		= 1;
+    `OPCODE_LBU: begin           // verificado   
+      branch 			= 0;
+      read_mem 			= 1;
+      write_mem 		= 0;
+      write_reg 		= 1;
       alu_op 			= `ALUOP_LBU;
-//    mux_write_rt_rd 		= 0;
-//    mux_alu_src_reg_imm 	= 1;
-//    mux_branch_jump 		= 1;
-//    mux_pc_branch 		= 0;
-//    mux_reg_src_alu_mem 	= 1;  
+      mux_write_rt_rd 		= 0;
+      mux_alu_src_reg_imm 	= 1;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
+      mux_reg_src_alu_mem 	= 0;
     end
     
-    `OPCODE_LHU: begin
-//    branch 			= 0;
-//    read_mem 			= 0;
-//    write_mem 		= 0;
-//    write_reg 		= 1;
+    `OPCODE_LHU: begin      // verificado
+      branch 			= 0;
+      read_mem 			= 1;
+      write_mem 		= 0;
+      write_reg 		= 1;
       alu_op 			= `ALUOP_LHU;
-//    mux_write_rt_rd 		= 0;
-//    mux_alu_src_reg_imm 	= 1;
-//    mux_branch_jump 		= 1;
-//    mux_pc_branch 		= 0;
-//    mux_reg_src_alu_mem 	= 1;  
+      mux_write_rt_rd 		= 0;
+      mux_alu_src_reg_imm 	= 1;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
+      mux_reg_src_alu_mem 	= 0;  
     end
     
-    `OPCODE_LUI: begin
+    `OPCODE_LUI: begin      // verificado
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
       write_reg 		= 1;
       alu_op 			= `ALUOP_LUI;
-      mux_write_rt_rd 		= 0;
+      mux_write_rt_rd 		= 1;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
+      mux_branch_jump 		= 0;
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 1; 
     end
  
-    `OPCODE_LW: begin
+    `OPCODE_LW: begin      // verificado
       branch 			= 0;
       read_mem 			= 1;
       write_mem 		= 0;
       write_reg 		= 1;
-      alu_op 			= `ALUOP_LW;   // falta alterar
+      alu_op 			= `ALUOP_LW;
       mux_write_rt_rd 		= 0;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
-      mux_pc_branch 		= 0;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
       mux_reg_src_alu_mem 	= 0;  
     end
     
-    `OPCODE_ORI: begin
+    `OPCODE_ORI: begin         // verificado
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
       write_reg 		= 1;
       alu_op 			= `ALUOP_ORI;
-      mux_write_rt_rd 		= 0;
+      mux_write_rt_rd 		= 1;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
+      mux_branch_jump 		= 0;
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 1;  
     end

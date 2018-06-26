@@ -102,17 +102,17 @@ always @ (A or B or OP) begin : operacoes_ula
 	
 	// 12     load byte unsigned
   5'b01100: begin
-    
+    S = 32'h000000ff & (A + B);
   end
   
   // 13     load half unsigned
   5'b01101: begin
-    
+    S = 32'h0000ffff & (A + B);
   end
 	
 	// 14     load word
 	5'b01110: begin
-    
+    S = A + B;
   end
 	
 	// 15     store byte

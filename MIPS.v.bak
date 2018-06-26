@@ -70,9 +70,8 @@ assign FOUR_CONST = 4;
 
 // lógica que encerra a simulação do processador
 always@(*) begin
-  if( funct == `ENCERRAR_SIMULACAO) $finish;
+  if( IMEM_instr == `ENCERRAR_SIMULACAO) $finish;
 end
-
 
 CONTROL control (
   .nrst(nrst),
@@ -182,9 +181,9 @@ ADDER adder_branch (
   .O(ADDER_BRANCH_out)
 );
 
-MUX21 mux_pc_branch (
-  .A(ADDER_PC_INCR_out),
-  .B(ADDER_BRANCH_out),
+MUX21 mux_pc_branch (           //////////////////////////
+  .A(ADDER_PC_INCR_out), // pc+4
+  .B(ADDER_BRANCH_out),  // calculo de label
   .O(MUX_PC_BRANCH_out),
   .S(CONTROL_mux_pc_branch)
 );
@@ -194,7 +193,7 @@ SHIFT_LEFT_2 shift_jump (
   .O(SHIFT_JUMP_out)
 );
 
-MUX21 branch_jump (
+MUX21 branch_jump (            //////////////////////////
   .A({PC_out[31:28], SHIFT_JUMP_out[27:0]}),
   .B(MUX_PC_BRANCH_out),
   .O(MUX_BRANCH_JUMP_out),
