@@ -115,19 +115,19 @@ always @ (A or B or OP) begin : operacoes_ula
     S = A + B;
   end
 	
-	// 15     store byte
+	// 15     store byte     // dúvida
 	5'b01111: begin
-    
+    S = 32'h000000ff & (A + B);
   end
   
-  // 16     store half
+  // 16     store half     // dúvida
 	5'b10000: begin
-    
+    S = 32'h0000ffff & (A + B);
   end
   
   // 17     store word
 	5'b10001: begin
-    
+    S = A + B;
   end
   
   // 18     jump

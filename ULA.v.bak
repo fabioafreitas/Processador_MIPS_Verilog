@@ -54,7 +54,7 @@ always @ (A or B or OP) begin : operacoes_ula
     S = A + B;
   end
 	
-	// 3     S = A  atribuição
+	// 3     S = A  atribuição    JR
 	5'b00011: begin
     S = A + 32'h0000;
   end
@@ -132,12 +132,12 @@ always @ (A or B or OP) begin : operacoes_ula
   
   // 18     jump
 	5'b10010: begin
-    
+    // deixar em branco
   end
   
   // 19     jump and link
 	5'b10011: begin
-    
+    // deixar em branco
   end
   
   default: begin

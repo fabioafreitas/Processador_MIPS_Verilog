@@ -50,7 +50,7 @@
 `define ALUOP_J         4'b1110  // ainda nao foi utilizado       
 `define ALUOP_JAL       4'b1111  // ainda nao foi utilizado       
 
-C:/Users/Aluno/Desktop/Projeto_3_Arquitetura/CONTROL.vmodule CONTROL(
+module CONTROL(
   nrst,
   opcode,
   branch,
@@ -123,7 +123,7 @@ always @(nrst, opcode) begin : decode_thread
   else begin
     case (opcode)
  
-    `OPCODE_TIPO_R: begin
+    `OPCODE_TIPO_R: begin         // verificado    
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
@@ -131,64 +131,64 @@ always @(nrst, opcode) begin : decode_thread
       alu_op 			= `ALUOP_TIPO_R;
       mux_write_rt_rd 		= 1;
       mux_alu_src_reg_imm 	= 0;
-      mux_branch_jump 		= 1;
-      mux_pc_branch 		= 0;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
       mux_reg_src_alu_mem 	= 1;  
     end
   
-    `OPCODE_ADDI: begin
+    `OPCODE_ADDI: begin        // verificado    
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
       write_reg 		= 1;
       alu_op 			= `ALUOP_SOMA;
-      mux_write_rt_rd 		= 0;
+      mux_write_rt_rd 		= 1;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
+      mux_branch_jump 		= 0;
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 1;  
     end
   
-    `OPCODE_ADDIU: begin
+    `OPCODE_ADDIU: begin       // verificado    
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;
       write_reg 		= 1;
       alu_op 			= `ALUOP_SOMA;
-      mux_write_rt_rd = 0;
+      mux_write_rt_rd = 1;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
+      mux_branch_jump 		= 0;
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 1;  
     end
     
-    `OPCODE_ANDI: begin
+    `OPCODE_ANDI: begin      // verificado    
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 0;  
       write_reg 		= 1;
       alu_op 			= `ALUOP_ANDI;
-      mux_write_rt_rd 		= 0;
+      mux_write_rt_rd 		= 1;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
+      mux_branch_jump 		= 0;
       mux_pc_branch 		= 0;
       mux_reg_src_alu_mem 	= 1;  
     end
     
-    `OPCODE_BEQ: begin
+    `OPCODE_BEQ: begin        // verificado
       branch 			= 1;
       read_mem 			= 0;
       write_mem 		= 0;
       write_reg 		= 0;
       alu_op 			= `ALUOP_BEQ;
       mux_write_rt_rd 		= 0;
-      mux_alu_src_reg_imm 	= 0;
+      mux_alu_src_reg_imm 	= 1;
       mux_branch_jump 		= 1;
       mux_pc_branch 		= 1;
-      mux_reg_src_alu_mem 	= 0;  
+      mux_reg_src_alu_mem 	= 0;  // dont care  
     end
     
-    `OPCODE_BNE: begin
+    `OPCODE_BNE: begin           // verificado
       branch 			= 1;
       read_mem 			= 0;
       write_mem 		= 0;
@@ -198,7 +198,7 @@ always @(nrst, opcode) begin : decode_thread
       mux_alu_src_reg_imm 	= 0;
       mux_branch_jump 		= 1;
       mux_pc_branch 		= 1;
-      mux_reg_src_alu_mem 	= 0;
+      mux_reg_src_alu_mem 	= 0;    // dont care
     end
     
     `OPCODE_J: begin         // verificado    
@@ -292,59 +292,59 @@ always @(nrst, opcode) begin : decode_thread
       mux_reg_src_alu_mem 	= 1;  
     end
     
-    `OPCODE_SLTI: begin
-//    branch 			= 0;
-//    read_mem 			= 0;
-//    write_mem 		= 0;
-//    write_reg 		= 1;
+    `OPCODE_SLTI: begin        // verificado    
+      branch 			= 0;
+      read_mem 			= 0;
+      write_mem 		= 0;
+      write_reg 		= 1;
       alu_op 			= `ALUOP_SLT;
-//    mux_write_rt_rd 		= 0;
-//    mux_alu_src_reg_imm 	= 1;
-//    mux_branch_jump 		= 1;
-//    mux_pc_branch 		= 0;
-//    mux_reg_src_alu_mem 	= 1;  
+      mux_write_rt_rd 		= 1;
+      mux_alu_src_reg_imm 	= 1;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 0;
+      mux_reg_src_alu_mem 	= 1;  
     end
     
-    `OPCODE_SLTIU: begin
-//    branch 			= 0;
-//    read_mem 			= 0;
-//    write_mem 		= 0;
-//    write_reg 		= 1;
+    `OPCODE_SLTIU: begin          // verificado
+      branch 			= 0;
+      read_mem 			= 0;
+      write_mem 		= 0;
+      write_reg 		= 1;
       alu_op 			= `ALUOP_SLT;
-//    mux_write_rt_rd 		= 0;
-//    mux_alu_src_reg_imm 	= 1;
-//    mux_branch_jump 		= 1;
-//    mux_pc_branch 		= 0;
-//    mux_reg_src_alu_mem 	= 1;  
+      mux_write_rt_rd 		= 1;
+      mux_alu_src_reg_imm 	= 1;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 0;
+      mux_reg_src_alu_mem 	= 1;  
     end
     
-    `OPCODE_SB: begin
-//    branch 			= 0;
-//    read_mem 			= 0;
-//    write_mem 		= 0;
-//    write_reg 		= 1;
+    `OPCODE_SB: begin        // verificado
+      branch 			= 0;
+      read_mem 			= 0;
+      write_mem 		= 1;
+      write_reg 		= 0;
       alu_op 			= `ALUOP_SB;
-//    mux_write_rt_rd 		= 0;
-//    mux_alu_src_reg_imm 	= 1;
-//    mux_branch_jump 		= 1;
-//    mux_pc_branch 		= 0;
-//    mux_reg_src_alu_mem 	= 1;  
+      mux_write_rt_rd 		= 0;
+      mux_alu_src_reg_imm 	= 1;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
+      mux_reg_src_alu_mem 	= 1;   // dont care  
     end
     
-    `OPCODE_SH: begin
-//    branch 			= 0;
-//    read_mem 			= 0;
-//    write_mem 		= 0;
-//    write_reg 		= 1;
+    `OPCODE_SH: begin               // verificado
+      branch 			= 0;
+      read_mem 			= 0;
+      write_mem 		= 1;
+      write_reg 		= 0;
       alu_op 			= `ALUOP_SH;
-//    mux_write_rt_rd 		= 0;
-//    mux_alu_src_reg_imm 	= 1;
-//    mux_branch_jump 		= 1;
-//    mux_pc_branch 		= 0;
-//    mux_reg_src_alu_mem 	= 1;  
+      mux_write_rt_rd 		= 0;
+      mux_alu_src_reg_imm 	= 1;
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
+      mux_reg_src_alu_mem 	= 1;  // dont care
     end
 
-    `OPCODE_SW: begin
+    `OPCODE_SW: begin             // verificado
       branch 			= 0;
       read_mem 			= 0;
       write_mem 		= 1;
@@ -352,9 +352,9 @@ always @(nrst, opcode) begin : decode_thread
       alu_op 			= `ALUOP_SW;
       mux_write_rt_rd 		= 0;
       mux_alu_src_reg_imm 	= 1;
-      mux_branch_jump 		= 1;
-      mux_pc_branch 		= 0;
-      mux_reg_src_alu_mem 	= 0;  
+      mux_branch_jump 		= 0;
+      mux_pc_branch 		= 1;
+      mux_reg_src_alu_mem 	= 1;    // dont care
     end
 
     endcase

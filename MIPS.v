@@ -197,7 +197,7 @@ MUX21 branch_jump (            ////////////////////////// é o que vai para pc
   .A({PC_out[31:28], SHIFT_JUMP_out[27:0]}),
   .B(MUX_PC_BRANCH_out),
   .O(MUX_BRANCH_JUMP_out),
-  .S(CONTROL_mux_branch_jump)
+  .S(CONTROL_mux_branch_jump & ULA_zero)    // DÚVIDA, AND DO DATAPATH
 );
 
 endmodule
